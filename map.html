@@ -152,6 +152,7 @@ let DATA = [];
 // --- State + Data from JSONBin ---
 const states = {};
 let saving = false;
+const deletedNames = new Set();
 let loadedFromCloud = false;
 
 async function loadAll() {
@@ -177,7 +178,7 @@ async function saveAll() {
     const cloudStates = cloud.states || {};
 
     const localNames = new Set(DATA.map(d => d.name));
-    const cloudOnly = cloudProps.filter(p => !localNames.has(p.name));
+    const cloudOnly = cloudProps.filter(p => !localNames.has(p.name) && !deletedNames.has(p.name));
     const localClean = DATA.map(d => { const c = {...d}; delete c.effective; delete c._i; return c; });
     const mergedProps = [...localClean, ...cloudOnly];
 

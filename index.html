@@ -198,6 +198,7 @@ let DATA = [];
 const states = {};
 let saving = false;
 let loadedFromCloud = false;
+const deletedNames = new Set();
 
 async function loadAll() {
   try {
@@ -223,9 +224,9 @@ async function saveAll() {
     const cloudProps = cloud.properties || [];
     const cloudStates = cloud.states || {};
 
-    // Local DATA wins for edits, cloud adds any properties local doesn't have
+    // Local DATA wins for edits, cloud adds any properties local doesn't have, but exclude explicitly-deleted ones
     const localNames = new Set(DATA.map(d => d.name));
-    const cloudOnly = cloudProps.filter(p => !localNames.has(p.name));
+    const cloudOnly = cloudProps.filter(p => !localNames.has(p.name) && !deletedNames.has(p.name));
     const localClean = DATA.map(d => { const c = {...d}; delete c.effective; delete c._i; return c; });
     const mergedProps = [...localClean, ...cloudOnly];
 
@@ -308,7 +309,9 @@ function saveEdit(idx) {
 
 // --- Delete property ---
 function deleteProperty(idx) {
-  if (!confirm('Remove ' + DATA[idx].name + '?')) return;
+  const name = DATA[idx].name;
+  if (!confirm('Remove ' + name + '?')) return;
+  deletedNames.add(name);
   DATA.splice(idx, 1);
   // Reindex states
   const newStates = {};
@@ -319,6 +322,9 @@ function deleteProperty(idx) {
   });
   Object.keys(states).forEach(k => delete states[k]);
   Object.assign(states, newStates);
+  // Close any open modal (when delete is invoked from edit modal)
+  const modal = document.getElementById('addModal');
+  if (modal) modal.style.display = 'none';
   saveAll();
   refreshAreas();
   render();
