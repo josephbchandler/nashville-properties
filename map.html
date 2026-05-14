@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Move to Florida - Map View</title>
+<title>Move to Nashville - Map View</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
@@ -109,7 +109,7 @@
 
 <div class="header">
   <div class="header-left">
-    <h1>Move to Florida — Map View</h1>
+    <h1>Move to Nashville — Map View</h1>
     <div class="subtitle"><span id="subtitle">Loading...</span></div>
   </div>
   <div style="display:flex;gap:8px">
@@ -147,37 +147,7 @@ const BIN_ID = '69dc60e5856a6821892957ac';
 const BIN_KEY = '$2a$10$SRUgPWxtOoUNlzr7cKyM2eC.k7uhVXgyf/GUrpd7jsoi5nWQVRCj6';
 const BIN_URL = 'https://api.jsonbin.io/v3/b/' + BIN_ID;
 
-let DATA = [
-  {name:"ARIUM Bristol Bay",area:"Bradenton",price:1603,concession:"",nearest_beach:"Holmes Beach",rating:4.5,address:"11001 Bristol Bay Dr, Bradenton, FL 34209",website:"https://ariumliving.com/bradenton-fl/bristol-bay/",zillow:"https://www.zillow.com/apartments/bradenton-fl/arium-bristol-bay/5Xhz8Y/",year:1989,walk:2,safety:"A+",dt_stpete:25,beach_drive:"15 min",lat:27.4625,lng:-82.6350},
-  {name:"The Preserve at Gateway",area:"Saint Petersburg",price:1787,concession:"",nearest_beach:"St. Pete Beach",rating:4.3,address:"11800 Dr Martin Luther King Jr St N, Saint Petersburg, FL 33716",website:"https://www.udr.com/tampa-apartments/st-petersburg/the-preserve-at-gateway/",zillow:"https://www.zillow.com/apartments/saint-petersburg-fl/the-preserve-at-gateway/5YvqvP/",year:2013,walk:16,safety:"A",dt_stpete:10,beach_drive:"25 min",lat:27.8585,lng:-82.6340},
-  {name:"The Blake at Bradenton",area:"Bradenton",price:1791,concession:"1 month free",nearest_beach:"Cortez Beach",rating:5,address:"6415 21st Avenue West, Bradenton, FL 34209",website:"https://www.theblakeatbradenton.com/",zillow:"https://www.zillow.com/apartments/bradenton-fl/the-blake-at-bradenton/CjKgzx/",year:1997,walk:21,safety:"A+",dt_stpete:25,beach_drive:"20 min",lat:27.4665,lng:-82.6100},
-  {name:"Magnolia Estates",area:"Bradenton",price:1825,concession:"",nearest_beach:"Siesta Key Beach",rating:4.4,address:"6437 Brook Village Cove, Bradenton, FL 34202",website:"https://www.magnoliaestatesfl.com/magnolia-estates-bradenton-fl",zillow:"https://www.zillow.com/apartments/bradenton-fl/magnolia-estates/Cjkw3c/",year:2020,walk:3,safety:"A+",dt_stpete:29,beach_drive:"25 min",lat:27.3925,lng:-82.4075},
-  {name:"Preserve at Riverwalk Apartments",area:"Bradenton",price:1834,concession:"6 weeks free",nearest_beach:"Cortez Beach",rating:4,address:"360 11th St E, Bradenton, FL 34208",website:"https://www.preserveatriverwalk.com/",zillow:"https://www.zillow.com/apartments/bradenton-fl/preserve-at-riverwalk-apartments/CkB9Gy/",year:2018,walk:46,safety:"A-",dt_stpete:25,beach_drive:"20 min",lat:27.4940,lng:-82.5585},
-  {name:"The Rosery",area:"Largo",price:1848,concession:"1 month free",nearest_beach:"Indian Rocks Beach",rating:4.5,address:"811 Rosery Rd NW, Largo, FL 33770",website:"https://www.theroseryapts.com/",zillow:"https://www.zillow.com/apartments/largo-fl/the-rosery/CjrVQB/",year:1969,walk:67,safety:"B+",dt_stpete:21,beach_drive:"15 min",lat:27.9095,lng:-82.7875},
-  {name:"Vida Lakewood Ranch",area:"Bradenton",price:1875,concession:"2 months free",nearest_beach:"Longboat Key",rating:4.8,address:"11109 Vida Cir, Bradenton, FL 34211",website:"https://vidalwr.com/",zillow:"https://www.zillow.com/apartments/bradenton-fl/vida-lakewood-ranch/CkBqDw/",year:2023,walk:17,safety:"A+",dt_stpete:29,beach_drive:"30 min",lat:27.4210,lng:-82.3985},
-  {name:"Isla Palmetto",area:"Palmetto",price:1893,concession:"10 weeks free",nearest_beach:"Bradenton Beach",rating:4,address:"6045 Bird Key Place, Palmetto, FL 34221",website:"https://islapalmetto.com/",zillow:"https://www.zillow.com/apartments/palmetto-fl/isla-palmetto/CqYV2d/",year:2026,walk:3,safety:"A+",dt_stpete:30,beach_drive:"20 min",lat:27.5260,lng:-82.5190},
-  {name:"ShoreView Waterfront Apartments",area:"Bradenton",price:1925,concession:"1 month free",nearest_beach:"Cortez Beach",rating:4.9,address:"1161 3rd Ave E, Bradenton, FL 34208",website:"https://www.shoreviewbradenton.com/",zillow:"https://www.zillow.com/apartments/bradenton-fl/shoreview-waterfront-apartments/Cknqkr/",year:2021,walk:47,safety:"A-",dt_stpete:25,beach_drive:"18 min",lat:27.4980,lng:-82.5510},
-  {name:"Renata at Lakewood Ranch",area:"Bradenton",price:1930,concession:"2 months free",nearest_beach:"Lido Beach",rating:4.5,address:"5420 122nd Cir E, Bradenton, FL 34211",website:"https://www.renatalakewoodranch.com/",zillow:"https://www.zillow.com/apartments/bradenton-fl/renata-at-lakewood-ranch/CkCc4S/",year:2023,walk:3,safety:"A+",dt_stpete:29,beach_drive:"30 min",lat:27.4100,lng:-82.3860},
-  {name:"Stafford at Artisan Lakes",area:"Palmetto",price:1938,concession:"2 months free",nearest_beach:"Bradenton Beach",rating:4,address:"6210 Terra Lago Cir, Palmetto, FL 34221",website:"https://www.liveatstafford.com/",zillow:"https://www.zillow.com/apartments/palmetto-fl/stafford-at-artisan-lakes/CkhMNR/",year:2025,walk:2,safety:"A+",dt_stpete:27,beach_drive:"20 min",lat:27.5310,lng:-82.5050},
-  {name:"Blue Heron Lakes",area:"Bradenton",price:1946,concession:"",nearest_beach:"Coquina Beach",rating:4,address:"420 Salt Meadow Circle, Bradenton, FL 34208",website:"https://blueheron-living.com/lakes",zillow:"https://www.zillow.com/apartments/bradenton-fl/blue-heron-lakes/5XjC9M/",year:2016,walk:50,safety:"A-",dt_stpete:28,beach_drive:"25 min",lat:27.4790,lng:-82.5450},
-  {name:"Palm Grove Luxury Apartments",area:"Ellenton",price:1965,concession:"10 weeks free",nearest_beach:"Bradenton Beach",rating:4.9,address:"2710 59th Dr E, Ellenton, FL 34222",website:"https://www.liveatpalmgrove.com/",zillow:"https://www.zillow.com/apartments/ellenton-fl/palm-grove-luxury-apartments/CkB9HJ/",year:2023,walk:49,safety:"B+",dt_stpete:27,beach_drive:"25 min",lat:27.5350,lng:-82.4875},
-  {name:"Cantabria",area:"Bradenton",price:1999,concession:"2 months free",nearest_beach:"Cortez Beach",rating:4.5,address:"4915 1st Ave E, Bradenton, FL 34208",website:"https://www.cantabriabradenton.com/",zillow:"https://www.zillow.com/apartments/bradenton-fl/cantabria/CmnpPJ/",year:2021,walk:2,safety:"A-",dt_stpete:28,beach_drive:"20 min",lat:27.4735,lng:-82.5275},
-  {name:"Cortland Brighton Bay",area:"Saint Petersburg",price:2023,concession:"1 month free",nearest_beach:"St. Pete Beach",rating:4.4,address:"10901 Brighton Bay Boulevard NE, Saint Petersburg, FL 33716",website:"https://cortland.com/apartments/cortland-brighton-bay/",zillow:"https://www.zillow.com/apartments/saint-petersburg-fl/cortland-brighton-bay/5Xnc86/",year:2001,walk:26,safety:"A",dt_stpete:15,beach_drive:"25 min",lat:27.8480,lng:-82.6225},
-  {name:"Cirrus at Aqua",area:"Bradenton",price:2079,concession:"2 months free",nearest_beach:"Cortez Beach",rating:4.6,address:"6850 Foxtail Palm Way, Bradenton, FL 34210",website:"https://www.cirrusbradenton.com/",zillow:"https://www.zillow.com/apartments/bradenton-fl/cirrus-at-aqua/C8bXPM/",year:2023,walk:0,safety:"A",dt_stpete:28,beach_drive:"12 min",lat:27.4445,lng:-82.6050},
-  {name:"Brixley",area:"Bradenton",price:2081,concession:"3 months free",nearest_beach:"Holmes Beach",rating:4,address:"1130 Upper Manatee River Rd NE, Bradenton, FL 34212",website:"https://www.brixleyapartments.com/",zillow:"https://www.zillow.com/apartments/bradenton-fl/brixley/CkBTrS/",year:2022,walk:37,safety:"A+",dt_stpete:28,beach_drive:"35 min",lat:27.5200,lng:-82.4700},
-  {name:"Ellenton Crossings",area:"Ellenton",price:2085,concession:"2 months free",nearest_beach:"Bradenton Beach",rating:4,address:"5950 Factory Shops Blvd, Ellenton, FL 34222",website:"https://ellentoncrossings.com/",zillow:"https://www.zillow.com/apartments/ellenton-fl/ellenton-crossings/Cd4Mqy/",year:2025,walk:56,safety:"B+",dt_stpete:30,beach_drive:"22 min",lat:27.5470,lng:-82.5200},
-  {name:"Venue at Lakewood Ranch",area:"Bradenton",price:2091,concession:"2 months free",nearest_beach:"Siesta Key Beach",rating:4.3,address:"8240 Lakewood Ranch Blvd, Bradenton, FL 34202",website:"https://www.venuelakewoodranch.com/",zillow:"https://www.zillow.com/apartments/bradenton-fl/venue-at-lakewood-ranch/5hJ2Y9/",year:2014,walk:0,safety:"A+",dt_stpete:28,beach_drive:"25 min",lat:27.4025,lng:-82.4150},
-  {name:"Quinn Residences at Moccasin Wallow",area:"Parrish",price:2100,concession:"4 half months free",nearest_beach:"Anna Maria Island",rating:4,address:"9009 Moccasin Wallow Road, Parrish, FL 34219",website:"https://live-moccasin.com/",zillow:"https://www.zillow.com/apartments/parrish-fl/quinn-residences-at-moccasin-wallow/CkBcYt/",year:2025,walk:0,safety:"A+",dt_stpete:45,beach_drive:"40 min",lat:27.5850,lng:-82.4050},
-  {name:"Rowan Pointe",area:"Pinellas Park",price:2279,concession:"4 weeks free",nearest_beach:"Madeira Beach",rating:4.7,address:"7950 Park Blvd, Pinellas Park, FL 33781",website:"https://www.liverowanpointe.com/",zillow:"https://www.zillow.com/apartments/pinellas-park-fl/rowan-pointe/CkBcYF/",year:2022,walk:38,safety:"B-",dt_stpete:10,beach_drive:"15 min",lat:27.8420,lng:-82.7175},
-  {name:"Gallery 3100",area:"St. Petersburg",price:2303,concession:"6 weeks free",nearest_beach:"Treasure Island Beach",rating:4.8,address:"3100 Central Ave, St. Petersburg, FL 33712",website:"https://www.gallery3100.com/",zillow:"https://www.zillow.com/apartments/saint-petersburg-fl/gallery-3100/CkBgz6/",year:2021,walk:82,safety:"B-",dt_stpete:3,beach_drive:"12 min",lat:27.7710,lng:-82.6805},
-  {name:"The Stadler Luxury Apartments",area:"Bradenton",price:2345,concession:"10 weeks free",nearest_beach:"Bradenton Beach",rating:4,address:"7120 Henry Dr, Bradenton, FL 34210",website:"https://www.thestadlerliving.com/",zillow:"https://www.zillow.com/apartments/bradenton-fl/the-stadler-luxury-apartments/CpsyJC/",year:2025,walk:0,safety:"A+",dt_stpete:28,beach_drive:"12 min",lat:27.4380,lng:-82.6100},
-  {name:"Magnolia Carillon",area:"Saint Petersburg",price:2349,concession:"6 weeks free",nearest_beach:"Indian Rocks Beach",rating:4.8,address:"500 Trinity Ln N, Saint Petersburg, FL 33716",website:"https://www.magnoliacarillon.com/",zillow:"https://www.zillow.com/apartments/saint-petersburg-fl/magnolia-carillon/5XjWds/",year:1999,walk:22,safety:"A+",dt_stpete:8,beach_drive:"20 min",lat:27.8650,lng:-82.6475},
-  {name:"The Addison Skyway Marina",area:"St. Petersburg",price:2424,concession:"6 weeks free",nearest_beach:"St. Pete Beach",rating:3.9,address:"3951 34th St S, Saint Petersburg, FL 33711",website:"https://missionrockresidential.com/apartments/fl/st-petersburg/addison-skyway-marina/",zillow:"https://www.zillow.com/apartments/saint-petersburg-fl/the-addison-skyway-marina/CkBHkb/",year:2021,walk:50,safety:"B-",dt_stpete:5,beach_drive:"10 min",lat:27.7375,lng:-82.6870},
-  {name:"Marlowe Gateway",area:"Saint Petersburg",price:2746,concession:"8 weeks free",nearest_beach:"Madeira Beach",rating:4.8,address:"2790 Grand Ave, St. Petersburg, FL 33716",website:"https://www.livemarlowegateway.com/",zillow:"https://www.zillow.com/apartments/saint-petersburg-fl/marlowe-gateway/CkCRQR/",year:2023,walk:30,safety:"A",dt_stpete:18,beach_drive:"20 min",lat:27.8530,lng:-82.6390},
-  {name:"Solano Belleair",area:"Clearwater",price:2260,concession:"6 weeks free",nearest_beach:"Indian Rocks Beach",rating:4.8,address:"1632 Clearwater Largo Rd N, Clearwater, FL 33756",website:"https://solanobelleair.com/",zillow:"",year:2022,walk:50,safety:"B+",dt_stpete:22,beach_drive:"10 min",lat:27.9175,lng:-82.7700},
-  {name:"Arabelle Clearwater",area:"Clearwater",price:2139,concession:"2 weeks free",nearest_beach:"Belleair Beach",rating:3.9,address:"1320 Sands Terrace E, Clearwater, FL 33764",website:"https://arabelleclearwater.com/",zillow:"",year:2021,walk:35,safety:"B+",dt_stpete:25,beach_drive:"15 min",lat:27.9250,lng:-82.7350},
-  {name:"Cortland Satori",area:"Pinellas Park",price:2379,concession:"1 month free",nearest_beach:"Treasure Island",rating:4.5,address:"3110 Grand Ave, Pinellas Park, FL 33782",website:"https://cortland.com/apartments/cortland-satori/",zillow:"",year:2020,walk:40,safety:"C+",dt_stpete:20,beach_drive:"18 min",lat:27.8450,lng:-82.6750}
-];
+let DATA = [];
 
 // --- State + Data from JSONBin ---
 const states = {};
@@ -223,7 +193,7 @@ async function saveAll() {
     await fetch(BIN_URL, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'X-Master-Key': BIN_KEY },
-      body: JSON.stringify({ properties: clean, states: mergedStates })
+      body: JSON.stringify({ properties: clean, states: mergedStates, passed: cloud.passed || [] })
     });
   } catch(e) { console.error('Save failed:', e); }
   saving = false;
@@ -280,7 +250,7 @@ function initMap() {
 }
 
 // Dark map tiles
-map = L.map('map', { zoomControl: true }).setView([27.65, -82.55], 10);
+map = L.map('map', { zoomControl: true }).setView([36.16, -86.78], 11);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
   attribution: '&copy; OpenStreetMap &copy; CARTO',
   maxZoom: 18
@@ -326,7 +296,7 @@ function renderMarkers() {
   const conc = document.getElementById('concessionFilter').value;
 
   const filtered = DATA.filter(d => {
-    if (q && ![d.name, d.area, d.nearest_beach, d.address].some(f => f.toLowerCase().includes(q))) return false;
+    if (q && ![d.name, d.area, d.address].some(f => (f||'').toLowerCase().includes(q))) return false;
     if (area && d.area !== area) return false;
     if (conc === 'has' && !d.concession) return false;
     if (conc === 'none' && d.concession) return false;
@@ -373,8 +343,7 @@ function renderMarkers() {
         <div class="popup-row"><span class="popup-label">Rating</span><span class="popup-val amber">${d.rating} ★</span></div>
         <div class="popup-row"><span class="popup-label">Walk Score</span><span class="popup-val blue">${d.walk}</span></div>
         <div class="popup-row"><span class="popup-label">Safety</span><span class="safety ${safetyClass(d.safety)}">${d.safety}</span></div>
-        <div class="popup-row"><span class="popup-label">DT St. Pete</span><span class="popup-val">${d.dt_stpete} min</span></div>
-        <div class="popup-row"><span class="popup-label">Nearest Beach</span><span class="popup-val">${d.nearest_beach} (${d.beach_drive})</span></div>
+        <div class="popup-row"><span class="popup-label">DT Nashville</span><span class="popup-val">${d.dt_nashville||0} min</span></div>
         <div class="popup-links">
           <a href="${d.website}" target="_blank">Website</a>
           <a href="${d.zillow}" target="_blank">Zillow</a>
@@ -442,7 +411,7 @@ function addPOIMarker(cat, lat, lng, name) {
 }
 
 // Bounding box: covers all properties with padding
-const bbox = '27.35,-82.85,27.95,-82.35';
+const bbox = '35.95,-87.05,36.40,-86.55';
 
 async function loadPOIs() {
   const endpoints = [
@@ -497,35 +466,7 @@ out center;`;
     });
 
     // Hardcoded pilates/barre/yoga studios (OSM has poor coverage)
-    const studios = [
-      {n:"Club Pilates St. Petersburg",lat:27.7703,lng:-82.6401},
-      {n:"[solidcore] Edge District",lat:27.7690,lng:-82.6467},
-      {n:"BODYROK Downtown St. Pete",lat:27.7698,lng:-82.6438},
-      {n:"St. Pete Pilates",lat:27.7648,lng:-82.6796},
-      {n:"Barre Central",lat:27.7648,lng:-82.7237},
-      {n:"Club Pilates North St. Pete",lat:27.8118,lng:-82.6393},
-      {n:"Pure Barre St. Petersburg",lat:27.7898,lng:-82.6411},
-      {n:"Club Pilates St. Pete Beach",lat:27.7403,lng:-82.7265},
-      {n:"The Pilates Grüp",lat:27.7498,lng:-82.7325},
-      {n:"Your Pilates Lifestyle",lat:27.8368,lng:-82.7784},
-      {n:"Club Pilates Clearwater",lat:27.9555,lng:-82.8009},
-      {n:"Club Pilates Countryside",lat:28.0172,lng:-82.7251},
-      {n:"Pure Barre Clearwater",lat:27.9994,lng:-82.7243},
-      {n:"YogaSix Safety Harbor",lat:27.9994,lng:-82.7241},
-      {n:"My Pilates 24/7",lat:27.9551,lng:-82.8009},
-      {n:"The Pilates Haus",lat:27.9600,lng:-82.7990},
-      {n:"Art of Fitness",lat:27.9073,lng:-82.7875},
-      {n:"Club Pilates Largo",lat:27.8803,lng:-82.7596},
-      {n:"Club Pilates Lakewood Ranch",lat:27.4077,lng:-82.4019},
-      {n:"Club Pilates Braden River",lat:27.4308,lng:-82.4791},
-      {n:"Pure Barre Lakewood Ranch",lat:27.4063,lng:-82.4135},
-      {n:"Pure Barre Bradenton NW",lat:27.4890,lng:-82.6184},
-      {n:"barre3 Lakewood Ranch",lat:27.4255,lng:-82.4329},
-      {n:"Mantra Fitness Lakewood Ranch",lat:27.4063,lng:-82.4132},
-      {n:"The Pilates Place at LWR",lat:27.4241,lng:-82.4516},
-      {n:"YogaSix Lakewood Ranch",lat:27.4077,lng:-82.4016},
-      {n:"Mantra Fitness Sarasota",lat:27.2818,lng:-82.5256}
-    ];
+    const studios = [];
     studios.forEach(s => addPOIMarker('pilates', s.lat, s.lng, s.n));
 
     document.getElementById('poiLoading').textContent =
@@ -534,35 +475,7 @@ out center;`;
     setTimeout(() => { document.getElementById('poiLoading').style.opacity = '0'; }, 3000);
   } catch(e) {
     // Even if Overpass fails, load the hardcoded studios
-    const studios = [
-      {n:"Club Pilates St. Petersburg",lat:27.7703,lng:-82.6401},
-      {n:"[solidcore] Edge District",lat:27.7690,lng:-82.6467},
-      {n:"BODYROK Downtown St. Pete",lat:27.7698,lng:-82.6438},
-      {n:"St. Pete Pilates",lat:27.7648,lng:-82.6796},
-      {n:"Barre Central",lat:27.7648,lng:-82.7237},
-      {n:"Club Pilates North St. Pete",lat:27.8118,lng:-82.6393},
-      {n:"Pure Barre St. Petersburg",lat:27.7898,lng:-82.6411},
-      {n:"Club Pilates St. Pete Beach",lat:27.7403,lng:-82.7265},
-      {n:"The Pilates Grüp",lat:27.7498,lng:-82.7325},
-      {n:"Your Pilates Lifestyle",lat:27.8368,lng:-82.7784},
-      {n:"Club Pilates Clearwater",lat:27.9555,lng:-82.8009},
-      {n:"Club Pilates Countryside",lat:28.0172,lng:-82.7251},
-      {n:"Pure Barre Clearwater",lat:27.9994,lng:-82.7243},
-      {n:"YogaSix Safety Harbor",lat:27.9994,lng:-82.7241},
-      {n:"My Pilates 24/7",lat:27.9551,lng:-82.8009},
-      {n:"The Pilates Haus",lat:27.9600,lng:-82.7990},
-      {n:"Art of Fitness",lat:27.9073,lng:-82.7875},
-      {n:"Club Pilates Largo",lat:27.8803,lng:-82.7596},
-      {n:"Club Pilates Lakewood Ranch",lat:27.4077,lng:-82.4019},
-      {n:"Club Pilates Braden River",lat:27.4308,lng:-82.4791},
-      {n:"Pure Barre Lakewood Ranch",lat:27.4063,lng:-82.4135},
-      {n:"Pure Barre Bradenton NW",lat:27.4890,lng:-82.6184},
-      {n:"barre3 Lakewood Ranch",lat:27.4255,lng:-82.4329},
-      {n:"Mantra Fitness Lakewood Ranch",lat:27.4063,lng:-82.4132},
-      {n:"The Pilates Place at LWR",lat:27.4241,lng:-82.4516},
-      {n:"YogaSix Lakewood Ranch",lat:27.4077,lng:-82.4016},
-      {n:"Mantra Fitness Sarasota",lat:27.2818,lng:-82.5256}
-    ];
+    const studios = [];
     studios.forEach(s => addPOIMarker('pilates', s.lat, s.lng, s.n));
     document.getElementById('poiLoading').textContent = `${poiLayers.pilates.length} studios (grocery/coffee failed)`;
     updatePOIVisibility();

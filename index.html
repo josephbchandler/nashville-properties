@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Move to Florida - Properties</title>
+<title>Move to Nashville - Properties</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f1117; color: #e0e0e0; padding: 24px; }
@@ -130,7 +130,7 @@
 
 <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:6px;">
   <div>
-    <h1>Move to Florida — Properties</h1>
+    <h1>Move to Nashville — Properties</h1>
     <p class="subtitle" style="margin-bottom:0" id="subtitle">Loading...</p>
   </div>
   <div style="display:flex;gap:8px">
@@ -143,7 +143,7 @@
 <div class="stats" id="stats"></div>
 
 <div class="controls">
-  <input type="text" id="search" placeholder="Search properties, areas, beaches…">
+  <input type="text" id="search" placeholder="Search properties, areas, neighborhoods…">
   <select id="areaFilter"><option value="">All Areas</option></select>
   <div class="pill-filter" id="favFilter">★ Favorites only</div>
   <div class="pill-filter" id="hideDownFilter">Hide rejected</div>
@@ -171,9 +171,7 @@
         <th data-sort="ppsf" data-col="ppsf">$/SqFt <span class="arrow"></span></th>
         <th data-sort="concession" data-col="concession">Concession <span class="arrow"></span></th>
         <th data-sort="effective" data-col="effective">Effective Rent <span class="arrow"></span></th>
-        <th data-sort="dt_stpete" data-col="dt_stpete">DT St. Pete <span class="arrow"></span></th>
-        <th data-sort="beach_drive" data-col="beach_drive">Beach Drive <span class="arrow"></span></th>
-        <th data-sort="nearest_beach" data-col="nearest_beach">Nearest Beach <span class="arrow"></span></th>
+        <th data-sort="dt_nashville" data-col="dt_nashville">DT Nashville <span class="arrow"></span></th>
         <th data-sort="rating" data-col="rating">Rating <span class="arrow"></span></th>
         <th data-sort="walk" data-col="walk">Walk Score <span class="arrow"></span></th>
         <th data-sort="safety" data-col="safety">Safety <span class="arrow"></span></th>
@@ -194,37 +192,7 @@ const BIN_ID = '69dc60e5856a6821892957ac';
 const BIN_KEY = '$2a$10$SRUgPWxtOoUNlzr7cKyM2eC.k7uhVXgyf/GUrpd7jsoi5nWQVRCj6';
 const BIN_URL = 'https://api.jsonbin.io/v3/b/' + BIN_ID;
 
-let DATA = [
-  {name:"ARIUM Bristol Bay",area:"Bradenton",beach_drive:"15 min",dt_stpete:25,website:"https://ariumliving.com/bradenton-fl/bristol-bay/",price:1603,concession:"",nearest_beach:"Holmes Beach",rating:4.5,address:"11001 Bristol Bay Dr, Bradenton, FL 34209",zillow:"https://www.zillow.com/apartments/bradenton-fl/arium-bristol-bay/5Xhz8Y/",year:1989,phone:"(941) 216-2965",walk:2,safety:"A+"},
-  {name:"The Preserve at Gateway",area:"Saint Petersburg",beach_drive:"25 min",dt_stpete:10,website:"https://www.udr.com/tampa-apartments/st-petersburg/the-preserve-at-gateway/",price:1787,concession:"",nearest_beach:"St. Pete Beach",rating:4.3,address:"11800 Dr Martin Luther King Jr St N, Saint Petersburg, FL 33716",zillow:"https://www.zillow.com/apartments/saint-petersburg-fl/the-preserve-at-gateway/5YvqvP/",year:2013,phone:"(727) 216-8749",walk:16,safety:"A"},
-  {name:"The Blake at Bradenton",area:"Bradenton",beach_drive:"20 min",dt_stpete:25,website:"https://www.theblakeatbradenton.com/",price:1791,concession:"1 month free",nearest_beach:"Cortez Beach",rating:5,address:"6415 21st Avenue West, Bradenton, FL 34209",zillow:"https://www.zillow.com/apartments/bradenton-fl/the-blake-at-bradenton/CjKgzx/",year:1997,phone:"(941) 263-7016",walk:21,safety:"A+"},
-  {name:"Magnolia Estates",area:"Bradenton",beach_drive:"25 min",dt_stpete:29,website:"https://www.magnoliaestatesfl.com/magnolia-estates-bradenton-fl",price:1825,concession:"",nearest_beach:"Siesta Key Beach",rating:4.4,address:"6437 Brook Village Cove, Bradenton, FL 34202",zillow:"https://www.zillow.com/apartments/bradenton-fl/magnolia-estates/Cjkw3c/",year:2020,phone:"(941) 841-1395",walk:3,safety:"A+"},
-  {name:"Preserve at Riverwalk Apartments",area:"Bradenton",beach_drive:"20 min",dt_stpete:25,website:"https://www.preserveatriverwalk.com/",price:1834,concession:"6 weeks free",nearest_beach:"Cortez Beach",rating:4,address:"360 11th St E, Bradenton, FL 34208",zillow:"https://www.zillow.com/apartments/bradenton-fl/preserve-at-riverwalk-apartments/CkB9Gy/",year:2018,phone:"(941) 541-1330",walk:46,safety:"A-"},
-  {name:"The Rosery",area:"Largo",beach_drive:"15 min",dt_stpete:21,website:"https://www.theroseryapts.com/",price:1848,concession:"1 month free",nearest_beach:"Indian Rocks Beach",rating:4.5,address:"811 Rosery Rd NW, Largo, FL 33770",zillow:"https://www.zillow.com/apartments/largo-fl/the-rosery/CjrVQB/",year:1969,phone:"(727) 618-0032",walk:67,safety:"B+"},
-  {name:"Vida Lakewood Ranch",area:"Bradenton",beach_drive:"30 min",dt_stpete:29,website:"https://vidalwr.com/",price:1875,concession:"2 months free",nearest_beach:"Longboat Key",rating:4.8,address:"11109 Vida Cir, Bradenton, FL 34211",zillow:"https://www.zillow.com/apartments/bradenton-fl/vida-lakewood-ranch/CkBqDw/",year:2023,phone:"(941) 877-6938",walk:17,safety:"A+"},
-  {name:"Isla Palmetto",area:"Palmetto",beach_drive:"20 min",dt_stpete:30,website:"https://islapalmetto.com/",price:1893,concession:"10 weeks free",nearest_beach:"Bradenton Beach",rating:4,address:"6045 Bird Key Place, Palmetto, FL 34221",zillow:"https://www.zillow.com/apartments/palmetto-fl/isla-palmetto/CqYV2d/",year:2026,phone:"(941) 299-6810",walk:3,safety:"A+"},
-  {name:"ShoreView Waterfront Apartments",area:"Bradenton",beach_drive:"18 min",dt_stpete:25,website:"https://www.shoreviewbradenton.com/",price:1925,concession:"1 month free",nearest_beach:"Cortez Beach",rating:4.9,address:"1161 3rd Ave E, Bradenton, FL 34208",zillow:"https://www.zillow.com/apartments/bradenton-fl/shoreview-waterfront-apartments/Cknqkr/",year:2021,phone:"(941) 841-6605",walk:47,safety:"A-"},
-  {name:"Renata at Lakewood Ranch",area:"Bradenton",beach_drive:"30 min",dt_stpete:29,website:"https://www.renatalakewoodranch.com/",price:1930,concession:"2 months free",nearest_beach:"Lido Beach",rating:4.5,address:"5420 122nd Cir E, Bradenton, FL 34211",zillow:"https://www.zillow.com/apartments/bradenton-fl/renata-at-lakewood-ranch/CkCc4S/",year:2023,phone:"(941) 219-0433",walk:3,safety:"A+"},
-  {name:"Stafford at Artisan Lakes",area:"Palmetto",beach_drive:"20 min",dt_stpete:27,website:"https://www.liveatstafford.com/",price:1938,concession:"2 months free",nearest_beach:"Bradenton Beach",rating:4,address:"6210 Terra Lago Cir, Palmetto, FL 34221",zillow:"https://www.zillow.com/apartments/palmetto-fl/stafford-at-artisan-lakes/CkhMNR/",year:2025,phone:"(941) 352-5016",walk:2,safety:"A+"},
-  {name:"Blue Heron Lakes",area:"Bradenton",beach_drive:"25 min",dt_stpete:28,website:"https://blueheron-living.com/lakes",price:1946,concession:"",nearest_beach:"Coquina Beach",rating:4,address:"420 Salt Meadow Circle, Bradenton, FL 34208",zillow:"https://www.zillow.com/apartments/bradenton-fl/blue-heron-lakes/5XjC9M/",year:2016,phone:"(941) 747-8008",walk:50,safety:"A-"},
-  {name:"Palm Grove Luxury Apartments",area:"Ellenton",beach_drive:"25 min",dt_stpete:27,website:"https://www.liveatpalmgrove.com/",price:1965,concession:"10 weeks free",nearest_beach:"Bradenton Beach",rating:4.9,address:"2710 59th Dr E, Ellenton, FL 34222",zillow:"https://www.zillow.com/apartments/ellenton-fl/palm-grove-luxury-apartments/CkB9HJ/",year:2023,phone:"(941) 269-8661",walk:49,safety:"B+"},
-  {name:"Cantabria",area:"Bradenton",beach_drive:"20 min",dt_stpete:28,website:"https://www.cantabriabradenton.com/",price:1999,concession:"2 months free",nearest_beach:"Cortez Beach",rating:4.5,address:"4915 1st Ave E, Bradenton, FL 34208",zillow:"https://www.zillow.com/apartments/bradenton-fl/cantabria/CmnpPJ/",year:2021,phone:"(904) 977-2965",walk:2,safety:"A-"},
-  {name:"Cortland Brighton Bay",area:"Saint Petersburg",beach_drive:"25 min",dt_stpete:15,website:"https://cortland.com/apartments/cortland-brighton-bay/",price:2023,concession:"1 month free",nearest_beach:"St. Pete Beach",rating:4.4,address:"10901 Brighton Bay Boulevard NE, Saint Petersburg, FL 33716",zillow:"https://www.zillow.com/apartments/saint-petersburg-fl/cortland-brighton-bay/5Xnc86/",year:2001,phone:"(727) 477-8437",walk:26,safety:"A"},
-  {name:"Cirrus at Aqua",area:"Bradenton",beach_drive:"12 min",dt_stpete:28,website:"https://www.cirrusbradenton.com/",price:2079,concession:"2 months free",nearest_beach:"Cortez Beach",rating:4.6,address:"6850 Foxtail Palm Way, Bradenton, FL 34210",zillow:"https://www.zillow.com/apartments/bradenton-fl/cirrus-at-aqua/C8bXPM/",year:2023,phone:"(941) 841-6494",walk:0,safety:"A"},
-  {name:"Brixley",area:"Bradenton",beach_drive:"35 min",dt_stpete:28,website:"https://www.brixleyapartments.com/",price:2081,concession:"3 months free",nearest_beach:"Holmes Beach",rating:4,address:"1130 Upper Manatee River Rd NE, Bradenton, FL 34212",zillow:"https://www.zillow.com/apartments/bradenton-fl/brixley/CkBTrS/",year:2022,phone:"(941) 201-2916",walk:37,safety:"A+"},
-  {name:"Ellenton Crossings",area:"Ellenton",beach_drive:"22 min",dt_stpete:30,website:"https://ellentoncrossings.com/",price:2085,concession:"2 months free",nearest_beach:"Bradenton Beach",rating:4,address:"5950 Factory Shops Blvd, Ellenton, FL 34222",zillow:"https://www.zillow.com/apartments/ellenton-fl/ellenton-crossings/Cd4Mqy/",year:2025,phone:"(941) 213-8974",walk:56,safety:"B+"},
-  {name:"Venue at Lakewood Ranch",area:"Bradenton",beach_drive:"25 min",dt_stpete:28,website:"https://www.venuelakewoodranch.com/",price:2091,concession:"2 months free",nearest_beach:"Siesta Key Beach",rating:4.3,address:"8240 Lakewood Ranch Blvd, Bradenton, FL 34202",zillow:"https://www.zillow.com/apartments/bradenton-fl/venue-at-lakewood-ranch/5hJ2Y9/",year:2014,phone:"(941) 538-6987",walk:0,safety:"A+"},
-  {name:"Quinn Residences at Moccasin Wallow",area:"Parrish",beach_drive:"40 min",dt_stpete:45,website:"https://live-moccasin.com/",price:2100,concession:"4 half months free",nearest_beach:"Anna Maria Island",rating:4,address:"9009 Moccasin Wallow Road, Parrish, FL 34219",zillow:"https://www.zillow.com/apartments/parrish-fl/quinn-residences-at-moccasin-wallow/CkBcYt/",year:2025,phone:"(941) 398-0988",walk:0,safety:"A+"},
-  {name:"Rowan Pointe",area:"Pinellas Park",beach_drive:"15 min",dt_stpete:10,website:"https://www.liverowanpointe.com/",price:2279,concession:"4 weeks free",nearest_beach:"Madeira Beach",rating:4.7,address:"7950 Park Blvd, Pinellas Park, FL 33781",zillow:"https://www.zillow.com/apartments/pinellas-park-fl/rowan-pointe/CkBcYF/",year:2022,phone:"(727) 349-3524",walk:38,safety:"B-"},
-  {name:"Gallery 3100",area:"St. Petersburg",beach_drive:"12 min",dt_stpete:3,website:"https://www.gallery3100.com/",price:2303,concession:"6 weeks free",nearest_beach:"Treasure Island Beach",rating:4.8,address:"3100 Central Ave, St. Petersburg, FL 33712",zillow:"https://www.zillow.com/apartments/saint-petersburg-fl/gallery-3100/CkBgz6/",year:2021,phone:"(727) 273-8088",walk:82,safety:"B-"},
-  {name:"The Stadler Luxury Apartments",area:"Bradenton",beach_drive:"12 min",dt_stpete:28,website:"https://www.thestadlerliving.com/",price:2345,concession:"10 weeks free",nearest_beach:"Bradenton Beach",rating:4,address:"7120 Henry Dr, Bradenton, FL 34210",zillow:"https://www.zillow.com/apartments/bradenton-fl/the-stadler-luxury-apartments/CpsyJC/",year:2025,phone:"(941) 541-2976",walk:0,safety:"A+"},
-  {name:"Magnolia Carillon",area:"Saint Petersburg",beach_drive:"20 min",dt_stpete:8,website:"https://www.magnoliacarillon.com/",price:2349,concession:"6 weeks free",nearest_beach:"Indian Rocks Beach",rating:4.8,address:"500 Trinity Ln N, Saint Petersburg, FL 33716",zillow:"https://www.zillow.com/apartments/saint-petersburg-fl/magnolia-carillon/5XjWds/",year:1999,phone:"(727) 513-0994",walk:22,safety:"A+"},
-  {name:"The Addison Skyway Marina",area:"St. Petersburg",beach_drive:"10 min",dt_stpete:5,website:"https://missionrockresidential.com/apartments/fl/st-petersburg/addison-skyway-marina/",price:2424,concession:"6 weeks free",nearest_beach:"St. Pete Beach",rating:3.9,address:"3951 34th St S, Saint Petersburg, FL 33711",zillow:"https://www.zillow.com/apartments/saint-petersburg-fl/the-addison-skyway-marina/CkBHkb/",year:2021,phone:"(727) 308-7498",walk:50,safety:"B-"},
-  {name:"Marlowe Gateway",area:"Saint Petersburg",beach_drive:"20 min",dt_stpete:18,website:"https://www.livemarlowegateway.com/",price:2746,concession:"8 weeks free",nearest_beach:"Madeira Beach",rating:4.8,address:"2790 Grand Ave, St. Petersburg, FL 33716",zillow:"https://www.zillow.com/apartments/saint-petersburg-fl/marlowe-gateway/CkCRQR/",year:2023,phone:"(727) 428-6652",walk:30,safety:"A"},
-  {name:"Solano Belleair",area:"Clearwater",beach_drive:"10 min",dt_stpete:22,website:"https://solanobelleair.com/",price:2260,concession:"6 weeks free",nearest_beach:"Indian Rocks Beach",rating:4.8,address:"1632 Clearwater Largo Rd N, Clearwater, FL 33756",zillow:"",year:2022,phone:"(727) 977-1099",walk:50,safety:"B+"},
-  {name:"Arabelle Clearwater",area:"Clearwater",beach_drive:"15 min",dt_stpete:25,website:"https://arabelleclearwater.com/",price:2139,concession:"2 weeks free",nearest_beach:"Belleair Beach",rating:3.9,address:"1320 Sands Terrace E, Clearwater, FL 33764",zillow:"",year:2021,phone:"(855) 968-0875",walk:35,safety:"B+"},
-  {name:"Cortland Satori",area:"Pinellas Park",beach_drive:"18 min",dt_stpete:20,website:"https://cortland.com/apartments/cortland-satori/",price:2379,concession:"1 month free",nearest_beach:"Treasure Island",rating:4.5,address:"3110 Grand Ave, Pinellas Park, FL 33782",zillow:"",year:2020,phone:"(727) 610-2844",walk:40,safety:"C+"}
-];
+let DATA = [];
 
 // --- State + Data from JSONBin ---
 const states = {};
@@ -275,7 +243,7 @@ async function saveAll() {
     await fetch(BIN_URL, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'X-Master-Key': BIN_KEY },
-      body: JSON.stringify({ properties: clean, states: mergedStates })
+      body: JSON.stringify({ properties: clean, states: mergedStates, passed: cloud.passed || [] })
     });
   } catch(e) { console.error('Save failed:', e); }
   saving = false;
@@ -302,8 +270,7 @@ function showEditModal(idx) {
     <div class="row"><div><label>Square Feet</label><input id="ep_sqft" type="number" value="${d.sqft||''}"></div><div></div></div>
     <div class="row"><div><label>Concession</label><input id="ep_concession" value="${(d.concession||'').replace(/"/g,'&quot;')}"></div><div><label>Rating</label><input id="ep_rating" type="number" step="0.1" value="${d.rating||''}"></div></div>
     <div class="row"><div><label>Year Built</label><input id="ep_year" type="number" value="${d.year||''}"></div><div><label>Safety Grade</label><input id="ep_safety" value="${d.safety||''}"></div></div>
-    <div class="row"><div><label>Walk Score</label><input id="ep_walk" type="number" value="${d.walk||''}"></div><div><label>DT St. Pete (min)</label><input id="ep_dt" type="number" value="${d.dt_stpete||''}"></div></div>
-    <div class="row"><div><label>Nearest Beach</label><input id="ep_beach" value="${d.nearest_beach||''}"></div><div><label>Beach Drive Time</label><input id="ep_beach_drive" value="${d.beach_drive||''}"></div></div>
+    <div class="row"><div><label>Walk Score</label><input id="ep_walk" type="number" value="${d.walk||''}"></div><div><label>DT Nashville (min)</label><input id="ep_dt" type="number" value="${d.dt_nashville||''}"></div></div>
     <label>Website</label><input id="ep_website" value="${(d.website||'').replace(/"/g,'&quot;')}">
     <div class="row"><div><label>Zillow URL</label><input id="ep_zillow" value="${(d.zillow||'').replace(/"/g,'&quot;')}"></div><div><label>Phone</label><input id="ep_phone" value="${d.phone||''}"></div></div>
     <div class="row"><div><label>Latitude</label><input id="ep_lat" type="number" step="0.0001" value="${d.lat||''}"></div><div><label>Longitude</label><input id="ep_lng" type="number" step="0.0001" value="${d.lng||''}"></div></div>
@@ -327,9 +294,7 @@ function saveEdit(idx) {
   d.year = parseInt(document.getElementById('ep_year').value) || 0;
   d.safety = document.getElementById('ep_safety').value.trim() || 'N/A';
   d.walk = parseInt(document.getElementById('ep_walk').value) || 0;
-  d.dt_stpete = parseInt(document.getElementById('ep_dt').value) || 0;
-  d.nearest_beach = document.getElementById('ep_beach').value.trim();
-  d.beach_drive = document.getElementById('ep_beach_drive').value.trim();
+  d.dt_nashville = parseInt(document.getElementById('ep_dt').value) || 0;
   d.website = document.getElementById('ep_website').value.trim();
   d.zillow = document.getElementById('ep_zillow').value.trim();
   d.phone = document.getElementById('ep_phone').value.trim();
@@ -371,8 +336,7 @@ function showAddModal() {
     <div class="row"><div><label>Square Feet</label><input id="ap_sqft" type="number" placeholder="e.g. 1100"></div><div></div></div>
     <div class="row"><div><label>Concession</label><input id="ap_concession" placeholder="e.g. 2 months free"></div><div><label>Rating</label><input id="ap_rating" type="number" step="0.1" placeholder="4.5"></div></div>
     <div class="row"><div><label>Year Built</label><input id="ap_year" type="number"></div><div><label>Safety Grade</label><input id="ap_safety" placeholder="A+, A, B+, etc."></div></div>
-    <div class="row"><div><label>Walk Score</label><input id="ap_walk" type="number"></div><div><label>DT St. Pete (min)</label><input id="ap_dt" type="number"></div></div>
-    <div class="row"><div><label>Nearest Beach</label><input id="ap_beach"></div><div><label>Beach Drive Time</label><input id="ap_beach_drive" placeholder="e.g. 15 min"></div></div>
+    <div class="row"><div><label>Walk Score</label><input id="ap_walk" type="number"></div><div><label>DT Nashville (min)</label><input id="ap_dt" type="number"></div></div>
     <label>Website</label><input id="ap_website">
     <div class="row"><div><label>Zillow URL</label><input id="ap_zillow"></div><div><label>Phone</label><input id="ap_phone"></div></div>
     <div class="row"><div><label>Latitude (for map)</label><input id="ap_lat" type="number" step="0.0001"></div><div><label>Longitude (for map)</label><input id="ap_lng" type="number" step="0.0001"></div></div>
@@ -396,9 +360,7 @@ function addProperty() {
     year: parseInt(document.getElementById('ap_year').value) || 0,
     safety: document.getElementById('ap_safety').value.trim() || 'N/A',
     walk: parseInt(document.getElementById('ap_walk').value) || 0,
-    dt_stpete: parseInt(document.getElementById('ap_dt').value) || 0,
-    nearest_beach: document.getElementById('ap_beach').value.trim(),
-    beach_drive: document.getElementById('ap_beach_drive').value.trim(),
+    dt_nashville: parseInt(document.getElementById('ap_dt').value) || 0,
     website: document.getElementById('ap_website').value.trim(),
     zillow: document.getElementById('ap_zillow').value.trim(),
     phone: document.getElementById('ap_phone').value.trim(),
@@ -446,8 +408,7 @@ function sortData(arr) {
   return arr.sort((a,b) => {
     let va = a[sortCol], vb = b[sortCol];
     let cmp = 0;
-    if (sortCol === 'beach_drive') { va = parseDrive(va); vb = parseDrive(vb); cmp = va - vb; }
-    else if (sortCol === 'ppsf') { va = a.sqft ? a.price/a.sqft : 999; vb = b.sqft ? b.price/b.sqft : 999; cmp = va - vb; }
+    if (sortCol === 'ppsf') { va = a.sqft ? a.price/a.sqft : 999; vb = b.sqft ? b.price/b.sqft : 999; cmp = va - vb; }
     else if (sortCol === 'sqft') { va = a.sqft || 0; vb = b.sqft || 0; cmp = va - vb; }
     else if (sortCol === 'safety') { cmp = (safetyOrder[va]||0) - (safetyOrder[vb]||0); }
     else if (sortCol === 'concession') { cmp = (va||'').localeCompare(vb||''); }
@@ -474,7 +435,7 @@ function render() {
   const conc = document.getElementById('concessionFilter').value;
 
   let filtered = DATA.filter(d => {
-    if (q && ![d.name, d.area, d.nearest_beach||'', d.address].some(f => f.toLowerCase().includes(q))) return false;
+    if (q && ![d.name, d.area, d.address].some(f => (f||'').toLowerCase().includes(q))) return false;
     if (area && d.area !== area) return false;
     if (conc === 'has' && !d.concession) return false;
     if (conc === 'none' && d.concession) return false;
@@ -501,7 +462,7 @@ function render() {
   `;
 
   const tbody = document.getElementById('tbody');
-  if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="17" class="no-results">No properties match your filters</td></tr>'; return; }
+  if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="15" class="no-results">No properties match your filters</td></tr>'; return; }
 
   const tbodyHTML = filtered.map(d => {
     const s = getState(d._i);
@@ -521,9 +482,7 @@ function render() {
       <td data-col="ppsf">${d.sqft ? '$'+(d.price/d.sqft).toFixed(2) : '<span style="color:#555">—</span>'}</td>
       <td data-col="concession">${d.concession ? `<span class="concession">${d.concession}</span>` : '—'}</td>
       <td class="price" data-col="effective">${d.effective < d.price ? '<span style="color:#34d399">$'+d.effective.toLocaleString()+'</span> <span style="color:#666;font-size:11px">(-$'+(d.price - d.effective).toLocaleString()+')</span>' : '—'}</td>
-      <td data-col="dt_stpete">${d.dt_stpete} min</td>
-      <td data-col="beach_drive">${d.beach_drive}</td>
-      <td data-col="nearest_beach">${d.nearest_beach||''}</td>
+      <td data-col="dt_nashville">${d.dt_nashville||0} min</td>
       <td data-col="rating"><span class="rating"><span class="star">★</span> ${d.rating}</span></td>
       <td data-col="walk"><span class="walk-score ${walkClass(d.walk)}">${d.walk}</span></td>
       <td data-col="safety"><span class="safety ${safetyClass(d.safety)}">${d.safety}</span></td>
@@ -544,11 +503,11 @@ function render() {
 const COL_DEFS = [
   {key:'area',label:'Area'}, {key:'price',label:'2+ Bed Price'}, {key:'sqft',label:'Sq Ft'},
   {key:'ppsf',label:'$/SqFt'}, {key:'concession',label:'Concession'}, {key:'effective',label:'Effective Rent'},
-  {key:'dt_stpete',label:'DT St. Pete'}, {key:'beach_drive',label:'Beach Drive'}, {key:'nearest_beach',label:'Nearest Beach'},
+  {key:'dt_nashville',label:'DT Nashville'},
   {key:'rating',label:'Rating'}, {key:'walk',label:'Walk Score'}, {key:'safety',label:'Safety'},
   {key:'year',label:'Year Built'}, {key:'links',label:'Links'}
 ];
-let hiddenCols = new Set(JSON.parse(localStorage.getItem('fl-hidden-cols') || '[]'));
+let hiddenCols = new Set(JSON.parse(localStorage.getItem('nash-hidden-cols') || '[]'));
 
 function applyColVisibility() {
   document.querySelectorAll('[data-col]').forEach(el => {
@@ -559,7 +518,7 @@ function applyColVisibility() {
 function toggleCol(key) {
   if (hiddenCols.has(key)) hiddenCols.delete(key);
   else hiddenCols.add(key);
-  localStorage.setItem('fl-hidden-cols', JSON.stringify([...hiddenCols]));
+  localStorage.setItem('nash-hidden-cols', JSON.stringify([...hiddenCols]));
   applyColVisibility();
 }
 
