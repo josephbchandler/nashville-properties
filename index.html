@@ -481,7 +481,7 @@ function render() {
       <td data-col="sqft">${d.sqft ? d.sqft.toLocaleString()+' sf' : '<span style="color:#555">—</span>'}</td>
       <td data-col="ppsf">${d.sqft ? '$'+(d.price/d.sqft).toFixed(2) : '<span style="color:#555">—</span>'}</td>
       <td data-col="concession">${d.concession ? `<span class="concession">${d.concession}</span>` : '—'}</td>
-      <td class="price" data-col="effective">${d.effective < d.price ? '<span style="color:#34d399">$'+d.effective.toLocaleString()+'</span> <span style="color:#666;font-size:11px">(-$'+(d.price - d.effective).toLocaleString()+')</span>' : '—'}</td>
+      <td class="price" data-col="effective">${d.effective < d.price ? '<span style="color:#34d399">$'+d.effective.toLocaleString()+'</span> <span style="color:#666;font-size:11px">(-$'+(d.price - d.effective).toLocaleString()+')</span>' : '$'+d.price.toLocaleString()}</td>
       <td data-col="dt_nashville">${d.dt_nashville||0} min</td>
       <td data-col="rating"><span class="rating"><span class="star">★</span> ${d.rating}</span></td>
       <td data-col="walk"><span class="walk-score ${walkClass(d.walk)}">${d.walk}</span></td>
