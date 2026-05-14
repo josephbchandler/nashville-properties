@@ -119,7 +119,7 @@
 </div>
 
 <div class="controls">
-  <input type="text" id="search" placeholder="Search properties, areas, beaches...">
+  <input type="text" id="search" placeholder="Search properties, areas, neighborhoods...">
   <select id="areaFilter"><option value="">All Areas</option></select>
   <div class="pill-filter" id="favFilter">★ Favorites only</div>
   <div class="pill-filter" id="hideDownFilter">Hide rejected</div>
@@ -466,7 +466,32 @@ out center;`;
     });
 
     // Hardcoded pilates/barre/yoga studios (OSM has poor coverage)
-    const studios = [];
+    const studios = [
+      {n:"Club Pilates North Gulch",lat:36.1607,lng:-86.7940},
+      {n:"Club Pilates Belle Meade",lat:36.1113,lng:-86.8633},
+      {n:"Club Pilates East Nashville",lat:36.1963,lng:-86.7195},
+      {n:"Club Pilates Cool Springs",lat:35.9681,lng:-86.8179},
+      {n:"Club Pilates Berry Farms",lat:35.9024,lng:-86.8699},
+      {n:"Club Pilates Indian Lake",lat:36.3282,lng:-86.6124},
+      {n:"Club Pilates Mt. Juliet",lat:36.2065,lng:-86.5185},
+      {n:"[solidcore] The Gulch",lat:36.1488,lng:-86.7907},
+      {n:"[solidcore] Germantown",lat:36.1751,lng:-86.7892},
+      {n:"[solidcore] Green Hills",lat:36.1013,lng:-86.8189},
+      {n:"[solidcore] Franklin",lat:35.9693,lng:-86.8415},
+      {n:"BODYROK Gulch",lat:36.1494,lng:-86.7929},
+      {n:"BODYROK East Nashville",lat:36.1901,lng:-86.7441},
+      {n:"Pure Barre The Gulch",lat:36.1523,lng:-86.7934},
+      {n:"Pure Barre Green Hills",lat:36.1078,lng:-86.8261},
+      {n:"Pure Barre West Nashville",lat:36.1427,lng:-86.8541},
+      {n:"Pure Barre Brentwood",lat:36.0287,lng:-86.7826},
+      {n:"Pure Barre Franklin",lat:35.9695,lng:-86.8413},
+      {n:"Pure Barre Franklin Westhaven",lat:35.9247,lng:-86.8688},
+      {n:"Pure Barre Hendersonville",lat:36.3271,lng:-86.6132},
+      {n:"Pure Barre Mt. Juliet",lat:36.1961,lng:-86.5139},
+      {n:"barre3 North Gulch",lat:36.1612,lng:-86.7951},
+      {n:"barre3 Paddock Place",lat:36.1356,lng:-86.8488},
+      {n:"YogaSix Green Hills",lat:36.1027,lng:-86.8219}
+    ];
     studios.forEach(s => addPOIMarker('pilates', s.lat, s.lng, s.n));
 
     document.getElementById('poiLoading').textContent =
@@ -475,7 +500,32 @@ out center;`;
     setTimeout(() => { document.getElementById('poiLoading').style.opacity = '0'; }, 3000);
   } catch(e) {
     // Even if Overpass fails, load the hardcoded studios
-    const studios = [];
+    const studios = [
+      {n:"Club Pilates North Gulch",lat:36.1607,lng:-86.7940},
+      {n:"Club Pilates Belle Meade",lat:36.1113,lng:-86.8633},
+      {n:"Club Pilates East Nashville",lat:36.1963,lng:-86.7195},
+      {n:"Club Pilates Cool Springs",lat:35.9681,lng:-86.8179},
+      {n:"Club Pilates Berry Farms",lat:35.9024,lng:-86.8699},
+      {n:"Club Pilates Indian Lake",lat:36.3282,lng:-86.6124},
+      {n:"Club Pilates Mt. Juliet",lat:36.2065,lng:-86.5185},
+      {n:"[solidcore] The Gulch",lat:36.1488,lng:-86.7907},
+      {n:"[solidcore] Germantown",lat:36.1751,lng:-86.7892},
+      {n:"[solidcore] Green Hills",lat:36.1013,lng:-86.8189},
+      {n:"[solidcore] Franklin",lat:35.9693,lng:-86.8415},
+      {n:"BODYROK Gulch",lat:36.1494,lng:-86.7929},
+      {n:"BODYROK East Nashville",lat:36.1901,lng:-86.7441},
+      {n:"Pure Barre The Gulch",lat:36.1523,lng:-86.7934},
+      {n:"Pure Barre Green Hills",lat:36.1078,lng:-86.8261},
+      {n:"Pure Barre West Nashville",lat:36.1427,lng:-86.8541},
+      {n:"Pure Barre Brentwood",lat:36.0287,lng:-86.7826},
+      {n:"Pure Barre Franklin",lat:35.9695,lng:-86.8413},
+      {n:"Pure Barre Franklin Westhaven",lat:35.9247,lng:-86.8688},
+      {n:"Pure Barre Hendersonville",lat:36.3271,lng:-86.6132},
+      {n:"Pure Barre Mt. Juliet",lat:36.1961,lng:-86.5139},
+      {n:"barre3 North Gulch",lat:36.1612,lng:-86.7951},
+      {n:"barre3 Paddock Place",lat:36.1356,lng:-86.8488},
+      {n:"YogaSix Green Hills",lat:36.1027,lng:-86.8219}
+    ];
     studios.forEach(s => addPOIMarker('pilates', s.lat, s.lng, s.n));
     document.getElementById('poiLoading').textContent = `${poiLayers.pilates.length} studios (grocery/coffee failed)`;
     updatePOIVisibility();
