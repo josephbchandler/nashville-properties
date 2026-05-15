@@ -225,10 +225,17 @@ async function saveAll() {
     const cloudProps = cloud.properties || [];
     const cloudStates = cloud.states || {};
 
-    // Local DATA wins for edits, cloud adds any properties local doesn't have, but exclude explicitly-deleted ones
+    // Field-level merge: for each local property, start with cloud version (preserves fields like dt_sohohouse added externally), then overlay local changes
+    const cloudByName = {};
+    cloudProps.forEach(p => { cloudByName[p.name] = p; });
+    const localClean = DATA.map(d => {
+      const c = {...d}; delete c.effective; delete c._i;
+      const cloudVer = cloudByName[d.name];
+      // Cloud as base, local fields overwrite
+      return cloudVer ? {...cloudVer, ...c} : c;
+    });
     const localNames = new Set(DATA.map(d => d.name));
     const cloudOnly = cloudProps.filter(p => !localNames.has(p.name) && !deletedNames.has(p.name));
-    const localClean = DATA.map(d => { const c = {...d}; delete c.effective; delete c._i; return c; });
     const mergedProps = [...localClean, ...cloudOnly];
 
     // Update local DATA to include any cloud additions
