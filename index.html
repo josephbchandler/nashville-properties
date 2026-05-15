@@ -277,7 +277,9 @@ function showEditModal(idx) {
     <label>Address</label><input id="ep_address" value="${(d.address||'').replace(/"/g,'&quot;')}">
     <div class="row"><div><label>Area</label><input id="ep_area" value="${d.area||''}"></div><div><label>2BR Price</label><input id="ep_price" type="number" value="${d.price||''}"></div></div>
     <div class="row"><div><label>Square Feet</label><input id="ep_sqft" type="number" value="${d.sqft||''}"></div><div></div></div>
-    <div class="row"><div><label>Concession</label><input id="ep_concession" value="${(d.concession||'').replace(/"/g,'&quot;')}"></div><div><label>Rating</label><input id="ep_rating" type="number" step="0.1" value="${d.rating||''}"></div></div>
+    <div class="row"><div><label>Concession (label)</label><input id="ep_concession" value="${(d.concession||'').replace(/"/g,'&quot;')}" placeholder="e.g. 2 months free + $1,000"></div><div><label>Rating</label><input id="ep_rating" type="number" step="0.1" value="${d.rating||''}"></div></div>
+    <div class="row"><div><label>Months Free</label><input id="ep_months_free" type="number" step="0.5" value="${d.months_free||''}" placeholder="2"></div><div><label>Weeks Free</label><input id="ep_weeks_free" type="number" step="1" value="${d.weeks_free||''}" placeholder="6"></div></div>
+    <div class="row"><div><label>$ Off / Gift Card</label><input id="ep_dollars_off" type="number" value="${d.dollars_off||''}" placeholder="1000"></div><div><label>Lease Term (months)</label><input id="ep_lease_term" type="number" value="${d.lease_term||''}" placeholder="12"></div></div>
     <div class="row"><div><label>Year Built</label><input id="ep_year" type="number" value="${d.year||''}"></div><div><label>Safety Grade</label><input id="ep_safety" value="${d.safety||''}"></div></div>
     <div class="row"><div><label>Walk Score</label><input id="ep_walk" type="number" value="${d.walk||''}"></div><div><label>DT Nashville (min)</label><input id="ep_dt" type="number" value="${d.dt_nashville||''}"></div></div>
     <label>Website</label><input id="ep_website" value="${(d.website||'').replace(/"/g,'&quot;')}">
@@ -300,6 +302,10 @@ function saveEdit(idx) {
   d.price = parseFloat(document.getElementById('ep_price').value) || 0;
   d.sqft = parseInt(document.getElementById('ep_sqft').value) || 0;
   d.concession = document.getElementById('ep_concession').value.trim();
+  d.months_free = parseFloat(document.getElementById('ep_months_free').value) || 0;
+  d.weeks_free = parseFloat(document.getElementById('ep_weeks_free').value) || 0;
+  d.dollars_off = parseFloat(document.getElementById('ep_dollars_off').value) || 0;
+  d.lease_term = parseInt(document.getElementById('ep_lease_term').value) || 12;
   d.rating = parseFloat(document.getElementById('ep_rating').value) || 0;
   d.year = parseInt(document.getElementById('ep_year').value) || 0;
   d.safety = document.getElementById('ep_safety').value.trim() || 'N/A';
@@ -350,7 +356,9 @@ function showAddModal() {
     <label>Address *</label><input id="ap_address">
     <div class="row"><div><label>Area *</label><input id="ap_area" placeholder="e.g. Bradenton"></div><div><label>2BR Price *</label><input id="ap_price" type="number"></div></div>
     <div class="row"><div><label>Square Feet</label><input id="ap_sqft" type="number" placeholder="e.g. 1100"></div><div></div></div>
-    <div class="row"><div><label>Concession</label><input id="ap_concession" placeholder="e.g. 2 months free"></div><div><label>Rating</label><input id="ap_rating" type="number" step="0.1" placeholder="4.5"></div></div>
+    <div class="row"><div><label>Concession (label)</label><input id="ap_concession" placeholder="e.g. 2 months free + $1,000"></div><div><label>Rating</label><input id="ap_rating" type="number" step="0.1" placeholder="4.5"></div></div>
+    <div class="row"><div><label>Months Free</label><input id="ap_months_free" type="number" step="0.5" placeholder="2"></div><div><label>Weeks Free</label><input id="ap_weeks_free" type="number" step="1" placeholder="6"></div></div>
+    <div class="row"><div><label>$ Off / Gift Card</label><input id="ap_dollars_off" type="number" placeholder="1000"></div><div><label>Lease Term (months)</label><input id="ap_lease_term" type="number" placeholder="12"></div></div>
     <div class="row"><div><label>Year Built</label><input id="ap_year" type="number"></div><div><label>Safety Grade</label><input id="ap_safety" placeholder="A+, A, B+, etc."></div></div>
     <div class="row"><div><label>Walk Score</label><input id="ap_walk" type="number"></div><div><label>DT Nashville (min)</label><input id="ap_dt" type="number"></div></div>
     <label>Website</label><input id="ap_website">
@@ -373,6 +381,10 @@ function addProperty() {
     name, address, area, price,
     sqft: parseInt(document.getElementById('ap_sqft').value) || 0,
     concession: document.getElementById('ap_concession').value.trim(),
+    months_free: parseFloat(document.getElementById('ap_months_free').value) || 0,
+    weeks_free: parseFloat(document.getElementById('ap_weeks_free').value) || 0,
+    dollars_off: parseFloat(document.getElementById('ap_dollars_off').value) || 0,
+    lease_term: parseInt(document.getElementById('ap_lease_term').value) || 12,
     rating: parseFloat(document.getElementById('ap_rating').value) || 0,
     year: parseInt(document.getElementById('ap_year').value) || 0,
     safety: document.getElementById('ap_safety').value.trim() || 'N/A',
@@ -398,40 +410,14 @@ function safetyClass(s) { return 'safety-' + (s||'').toLowerCase().replace('-','
 function walkClass(w) { return w >= 50 ? 'ws-high' : w >= 20 ? 'ws-mid' : 'ws-low'; }
 const safetyOrder = {'A+':8,'A':7,'A-':6,'B+':5,'B':4,'B-':3,'C+':2,'C':1};
 
-function calcEffective(price, concession) {
-  if (!concession || !price) return price;
-  const c = concession.toLowerCase();
-
-  // Detect lease term — defaults to 12, overrides if mentioned (e.g., "15-month lease")
-  let leaseTerm = 12;
-  const lt = c.match(/(\d+)[\s-]*month\s*lease/);
-  if (lt) leaseTerm = parseInt(lt[1]);
-
-  let monthsFree = 0;
-  let dollarsOff = 0;
-
-  // "X months free" / "X month free" / "X.5 months free"
-  const monthsMatch = c.match(/([\d.]+)\s*month[s]?\s*free/);
-  if (monthsMatch) {
-    let n = parseFloat(monthsMatch[1]);
-    // Check for "half month" qualifier (e.g., "4 half months free")
-    if (c.includes('half month')) n *= 0.5;
-    monthsFree += n;
-  }
-
-  // "X weeks free"
-  const weeksMatch = c.match(/([\d.]+)\s*week[s]?\s*free/);
-  if (weeksMatch) monthsFree += parseFloat(weeksMatch[1]) / 4.33;
-
-  // "$X off" / "$X gift card" / "$X look-and-lease" — flat dollar savings amortized over lease
-  const dollarMatches = [...c.matchAll(/\$\s?([\d,]+)/g)];
-  for (const m of dollarMatches) {
-    dollarsOff += parseInt(m[1].replace(/,/g, ''));
-  }
-
-  const monthlySavingsFromDollars = dollarsOff / leaseTerm;
+function calcEffective(d) {
+  const price = d.price;
+  if (!price) return price;
+  const leaseTerm = d.lease_term || 12;
+  const monthsFree = (d.months_free || 0) + ((d.weeks_free || 0) / 4.33);
+  const dollarsOff = d.dollars_off || 0;
   const effectiveFromMonths = price * (leaseTerm - monthsFree) / leaseTerm;
-  return Math.round(effectiveFromMonths - monthlySavingsFromDollars);
+  return Math.round(effectiveFromMonths - (dollarsOff / leaseTerm));
 }
 
 let sortCol = 'price', sortAsc = true, showFavsOnly = false, hideDown = false;
@@ -468,7 +454,7 @@ function updateHeaders() {
 }
 
 function render() {
-  DATA.forEach((d, i) => { d.effective = calcEffective(d.price, d.concession); d._i = i; });
+  DATA.forEach((d, i) => { d.effective = calcEffective(d); d._i = i; });
   const allAreas = [...new Set(DATA.map(d => d.area))].sort();
   document.getElementById('subtitle').textContent = DATA.length + ' apartments across ' + allAreas.join(' / ');
   const q = document.getElementById('search').value.toLowerCase();
