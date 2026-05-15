@@ -399,16 +399,39 @@ function walkClass(w) { return w >= 50 ? 'ws-high' : w >= 20 ? 'ws-mid' : 'ws-lo
 const safetyOrder = {'A+':8,'A':7,'A-':6,'B+':5,'B':4,'B-':3,'C+':2,'C':1};
 
 function calcEffective(price, concession) {
-  if (!concession) return price;
+  if (!concession || !price) return price;
   const c = concession.toLowerCase();
-  const numMatch = c.match(/([\d.]+)/);
-  if (!numMatch) return price;
-  const num = parseFloat(numMatch[1]);
+
+  // Detect lease term — defaults to 12, overrides if mentioned (e.g., "15-month lease")
+  let leaseTerm = 12;
+  const lt = c.match(/(\d+)[\s-]*month\s*lease/);
+  if (lt) leaseTerm = parseInt(lt[1]);
+
   let monthsFree = 0;
-  if (c.includes('half month')) monthsFree = num * 0.5;
-  else if (c.includes('week')) monthsFree = num / 4.33;
-  else if (c.includes('month')) monthsFree = num;
-  return Math.round(price * (12 - monthsFree) / 12);
+  let dollarsOff = 0;
+
+  // "X months free" / "X month free" / "X.5 months free"
+  const monthsMatch = c.match(/([\d.]+)\s*month[s]?\s*free/);
+  if (monthsMatch) {
+    let n = parseFloat(monthsMatch[1]);
+    // Check for "half month" qualifier (e.g., "4 half months free")
+    if (c.includes('half month')) n *= 0.5;
+    monthsFree += n;
+  }
+
+  // "X weeks free"
+  const weeksMatch = c.match(/([\d.]+)\s*week[s]?\s*free/);
+  if (weeksMatch) monthsFree += parseFloat(weeksMatch[1]) / 4.33;
+
+  // "$X off" / "$X gift card" / "$X look-and-lease" — flat dollar savings amortized over lease
+  const dollarMatches = [...c.matchAll(/\$\s?([\d,]+)/g)];
+  for (const m of dollarMatches) {
+    dollarsOff += parseInt(m[1].replace(/,/g, ''));
+  }
+
+  const monthlySavingsFromDollars = dollarsOff / leaseTerm;
+  const effectiveFromMonths = price * (leaseTerm - monthsFree) / leaseTerm;
+  return Math.round(effectiveFromMonths - monthlySavingsFromDollars);
 }
 
 let sortCol = 'price', sortAsc = true, showFavsOnly = false, hideDown = false;
