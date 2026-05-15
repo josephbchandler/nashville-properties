@@ -135,7 +135,6 @@
   </div>
   <div style="display:flex;gap:8px">
     <a href="map.html" style="background:#1a1d27;border:1px solid #2a2d3a;border-radius:8px;color:#60a5fa;padding:8px 16px;font-size:13px;text-decoration:none;">Map</a>
-    <a href="passed.html" style="background:#1a1d27;border:1px solid #2a2d3a;border-radius:8px;color:#888;padding:8px 16px;font-size:13px;text-decoration:none;">Passed</a>
   </div>
 </div>
 
@@ -176,6 +175,7 @@
         <th data-sort="walk" data-col="walk">Walk Score <span class="arrow"></span></th>
         <th data-sort="safety" data-col="safety">Safety <span class="arrow"></span></th>
         <th data-sort="year" data-col="year">Year Built <span class="arrow"></span></th>
+        <th data-col="note">Note</th>
         <th data-col="links">Links</th>
         <th style="width:30px;cursor:default"></th>
       </tr>
@@ -244,7 +244,7 @@ async function saveAll() {
     await fetch(BIN_URL, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'X-Master-Key': BIN_KEY },
-      body: JSON.stringify({ properties: clean, states: mergedStates, passed: cloud.passed || [] })
+      body: JSON.stringify({ properties: clean, states: mergedStates })
     });
   } catch(e) { console.error('Save failed:', e); }
   saving = false;
@@ -275,6 +275,7 @@ function showEditModal(idx) {
     <label>Website</label><input id="ep_website" value="${(d.website||'').replace(/"/g,'&quot;')}">
     <div class="row"><div><label>Zillow URL</label><input id="ep_zillow" value="${(d.zillow||'').replace(/"/g,'&quot;')}"></div><div><label>Phone</label><input id="ep_phone" value="${d.phone||''}"></div></div>
     <div class="row"><div><label>Latitude</label><input id="ep_lat" type="number" step="0.0001" value="${d.lat||''}"></div><div><label>Longitude</label><input id="ep_lng" type="number" step="0.0001" value="${d.lng||''}"></div></div>
+    <label>Notes</label><textarea id="ep_note" style="width:100%;min-height:60px;background:#252836;border:1px solid #2a2d3a;border-radius:6px;color:#e0e0e0;padding:8px 10px;font-size:13px;outline:none;font-family:inherit;resize:vertical">${(d.note||'').replace(/</g,'&lt;')}</textarea>
     <div class="modal-actions">
       <button class="cancel" onclick="document.getElementById('addModal').style.display='none'">Cancel</button>
       <button class="save" style="background:#f87171" onclick="deleteProperty(${idx})">Delete</button>
@@ -301,6 +302,7 @@ function saveEdit(idx) {
   d.phone = document.getElementById('ep_phone').value.trim();
   d.lat = parseFloat(document.getElementById('ep_lat').value) || 0;
   d.lng = parseFloat(document.getElementById('ep_lng').value) || 0;
+  d.note = document.getElementById('ep_note').value.trim();
   document.getElementById('addModal').style.display = 'none';
   saveAll();
   refreshAreas();
@@ -346,6 +348,7 @@ function showAddModal() {
     <label>Website</label><input id="ap_website">
     <div class="row"><div><label>Zillow URL</label><input id="ap_zillow"></div><div><label>Phone</label><input id="ap_phone"></div></div>
     <div class="row"><div><label>Latitude (for map)</label><input id="ap_lat" type="number" step="0.0001"></div><div><label>Longitude (for map)</label><input id="ap_lng" type="number" step="0.0001"></div></div>
+    <label>Notes</label><textarea id="ap_note" style="width:100%;min-height:60px;background:#252836;border:1px solid #2a2d3a;border-radius:6px;color:#e0e0e0;padding:8px 10px;font-size:13px;outline:none;font-family:inherit;resize:vertical" placeholder="Why you're considering or rejecting this property"></textarea>
     <div class="modal-actions"><button class="cancel" onclick="closeAddModal()">Cancel</button><button class="save" onclick="addProperty()">Add</button></div>
   </div>`;
 }
@@ -371,7 +374,8 @@ function addProperty() {
     zillow: document.getElementById('ap_zillow').value.trim(),
     phone: document.getElementById('ap_phone').value.trim(),
     lat: parseFloat(document.getElementById('ap_lat').value) || 0,
-    lng: parseFloat(document.getElementById('ap_lng').value) || 0
+    lng: parseFloat(document.getElementById('ap_lng').value) || 0,
+    note: document.getElementById('ap_note').value.trim()
   };
   DATA.push(prop);
   saveAll();
@@ -468,7 +472,7 @@ function render() {
   `;
 
   const tbody = document.getElementById('tbody');
-  if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="15" class="no-results">No properties match your filters</td></tr>'; return; }
+  if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="16" class="no-results">No properties match your filters</td></tr>'; return; }
 
   const tbodyHTML = filtered.map(d => {
     const s = getState(d._i);
@@ -492,7 +496,8 @@ function render() {
       <td data-col="rating"><span class="rating"><span class="star">★</span> ${d.rating}</span></td>
       <td data-col="walk"><span class="walk-score ${walkClass(d.walk)}">${d.walk}</span></td>
       <td data-col="safety"><span class="safety ${safetyClass(d.safety)}">${d.safety}</span></td>
-      <td data-col="year">${d.year}</td>
+      <td data-col="year">${d.year||''}</td>
+      <td data-col="note" style="white-space:normal;max-width:280px;font-size:12px;color:#aaa;line-height:1.4">${(d.note||'').replace(/</g,'&lt;')}</td>
       <td data-col="links">
         <a href="${d.website}" target="_blank">Site</a>
         ${d.zillow ? ` · <a href="${d.zillow}" target="_blank">Zillow</a>` : ''}
@@ -511,7 +516,7 @@ const COL_DEFS = [
   {key:'ppsf',label:'$/SqFt'}, {key:'concession',label:'Concession'}, {key:'effective',label:'Effective Rent'},
   {key:'dt_nashville',label:'DT Nashville'},
   {key:'rating',label:'Rating'}, {key:'walk',label:'Walk Score'}, {key:'safety',label:'Safety'},
-  {key:'year',label:'Year Built'}, {key:'links',label:'Links'}
+  {key:'year',label:'Year Built'}, {key:'note',label:'Note'}, {key:'links',label:'Links'}
 ];
 let hiddenCols = new Set(JSON.parse(localStorage.getItem('nash-hidden-cols') || '[]'));
 

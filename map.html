@@ -114,7 +114,6 @@
   </div>
   <div style="display:flex;gap:8px">
     <a class="nav-link" href="index.html">Table</a>
-    <a class="nav-link" href="passed.html" style="color:#888">Passed</a>
   </div>
 </div>
 
@@ -194,7 +193,7 @@ async function saveAll() {
     await fetch(BIN_URL, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'X-Master-Key': BIN_KEY },
-      body: JSON.stringify({ properties: clean, states: mergedStates, passed: cloud.passed || [] })
+      body: JSON.stringify({ properties: clean, states: mergedStates })
     });
   } catch(e) { console.error('Save failed:', e); }
   saving = false;
