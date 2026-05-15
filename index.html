@@ -171,6 +171,7 @@
         <th data-sort="concession" data-col="concession">Concession <span class="arrow"></span></th>
         <th data-sort="effective" data-col="effective">Effective Rent <span class="arrow"></span></th>
         <th data-sort="dt_nashville" data-col="dt_nashville">DT Nashville <span class="arrow"></span></th>
+        <th data-sort="dt_sohohouse" data-col="dt_sohohouse">Soho House <span class="arrow"></span></th>
         <th data-sort="rating" data-col="rating">Rating <span class="arrow"></span></th>
         <th data-sort="walk" data-col="walk">Walk Score <span class="arrow"></span></th>
         <th data-sort="safety" data-col="safety">Safety <span class="arrow"></span></th>
@@ -472,7 +473,7 @@ function render() {
   `;
 
   const tbody = document.getElementById('tbody');
-  if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="16" class="no-results">No properties match your filters</td></tr>'; return; }
+  if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="17" class="no-results">No properties match your filters</td></tr>'; return; }
 
   const tbodyHTML = filtered.map(d => {
     const s = getState(d._i);
@@ -493,6 +494,7 @@ function render() {
       <td data-col="concession">${d.concession ? `<span class="concession">${d.concession}</span>` : '—'}</td>
       <td class="price" data-col="effective">${d.effective < d.price ? '<span style="color:#34d399">$'+d.effective.toLocaleString()+'</span> <span style="color:#666;font-size:11px">(-$'+(d.price - d.effective).toLocaleString()+')</span>' : '$'+d.price.toLocaleString()}</td>
       <td data-col="dt_nashville">${d.dt_nashville||0} min</td>
+      <td data-col="dt_sohohouse">${d.dt_sohohouse ? d.dt_sohohouse+' min' : '—'}</td>
       <td data-col="rating"><span class="rating"><span class="star">★</span> ${d.rating}</span></td>
       <td data-col="walk"><span class="walk-score ${walkClass(d.walk)}">${d.walk}</span></td>
       <td data-col="safety"><span class="safety ${safetyClass(d.safety)}">${d.safety}</span></td>
@@ -514,7 +516,7 @@ function render() {
 const COL_DEFS = [
   {key:'area',label:'Area'}, {key:'price',label:'2+ Bed Price'}, {key:'sqft',label:'Sq Ft'},
   {key:'ppsf',label:'$/SqFt'}, {key:'concession',label:'Concession'}, {key:'effective',label:'Effective Rent'},
-  {key:'dt_nashville',label:'DT Nashville'},
+  {key:'dt_nashville',label:'DT Nashville'},{key:'dt_sohohouse',label:'Soho House'},
   {key:'rating',label:'Rating'}, {key:'walk',label:'Walk Score'}, {key:'safety',label:'Safety'},
   {key:'year',label:'Year Built'}, {key:'note',label:'Note'}, {key:'links',label:'Links'}
 ];
