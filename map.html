@@ -302,6 +302,8 @@ function renderMarkers() {
     if (conc === 'none' && d.concession) return false;
     if (showFavsOnly && getState(d._i) !== 1) return false;
     if (hideDown && getState(d._i) === 2) return false;
+    // Skip properties without valid coordinates
+    if (!d.lat || !d.lng || (d.lat === 0 && d.lng === 0)) return false;
     return true;
   });
 
